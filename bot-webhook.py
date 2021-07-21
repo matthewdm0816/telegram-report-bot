@@ -3,6 +3,7 @@ import os
 import sys
 from icecream import ic
 import colorama
+from telegram import chat
 import toml
 import telegram
 from telegram.ext import (
@@ -56,7 +57,12 @@ app = Flask(__name__)
 @app.route('/notify', methods=['GET', 'POST'])
 def notify():
     if request.args.get('uuid') == FLASK_TOKEN:
-        ic(bot.get_updates())
+        if 'text' in request.args.keys():
+            text = request.args.get('text')
+            logging.info('Sending "%s"...' % text)
+            bot.send_message(text=request.args.get('text'), chat_id=CHAT_ID)
+        else:
+            bot.send_message(text="お兄ちゃん、どうしたの？", chat_id=CHAT_ID)
         return Response(response='Data Sent!', status=200)
     else:
         return Response(response='Wrong UUID!', status=400)
