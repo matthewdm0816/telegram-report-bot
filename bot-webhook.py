@@ -30,7 +30,7 @@ log_format = (
 logging.basicConfig(format=log_format, level=logging.INFO, datefmt="%I:%M:%S")
 logger.info("Starting bot...")
 
-
+# Load Configurations
 fname = 'config.toml'
 logging.info("Loading Config from %s" % fname)
 with open(fname, 'r') as f:
