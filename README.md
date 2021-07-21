@@ -1,0 +1,2 @@
+## Simple Telegram Webhook Push Bot
+This script written in Python mainly using [Flask](https://flask.palletsprojects.com/en/2.0.x/), [Python-Telegram-Bot](https://github.com/python-telegram-bot/python-telegram-bot) and Requests libraries provides simple webhook message pushing functionality for your telegram bot in private chat, groups or channels. 
