@@ -32,9 +32,9 @@ logging.basicConfig(format=log_format, level=logging.INFO, datefmt="%I:%M:%S")
 logger.info("Starting bot...")
 
 # Load Configurations
-fname = 'config.toml'
+fname = "config.toml"
 logging.info("Loading Config from %s" % fname)
-with open(fname, 'r') as f:
+with open(fname, "r") as f:
     config = toml.load(f)
 ic(config)
 
@@ -49,29 +49,29 @@ FLASK_TOKEN = config["flask_token"]
 
 bot = telegram.Bot(token=TOKEN)
 bot_identity = bot.get_me()
-logging.info("Starting Bot %s @%s..." % (bot_identity["first_name"], bot_identity["username"]))
+logging.info(
+    "Starting Bot %s @%s..." % (bot_identity["first_name"], bot_identity["username"])
+)
 
 
 # Flask app initialization
 app = Flask(__name__)
-@app.route('/notify', methods=['GET', 'POST'])
+
+
+@app.route("/notify", methods=["GET", "POST"])
 def notify():
-    if request.args.get('uuid') == FLASK_TOKEN:
-        if 'text' in request.args.keys():
-            text = request.args.get('text')
+    if request.args.get("uuid") == FLASK_TOKEN:
+        if "text" in request.args.keys():
+            text = request.args.get("text")
             logging.info('Sending "%s"...' % text)
-            bot.send_message(text=request.args.get('text'), chat_id=CHAT_ID)
+            bot.send_message(text=request.args.get("text"), chat_id=CHAT_ID)
         else:
             bot.send_message(text="お兄ちゃん、どうしたの？", chat_id=CHAT_ID)
-        return Response(response='Data Sent!', status=200)
+        return Response(response="Data Sent!", status=200)
     else:
-        return Response(response='Wrong UUID!', status=400)
+        return Response(response="Wrong UUID!", status=400)
 
 
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000)
     # Load configurations
-    
-
-
-
