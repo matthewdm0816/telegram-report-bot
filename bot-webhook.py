@@ -60,16 +60,19 @@ app = Flask(__name__)
 
 @app.route("/notify", methods=["GET", "POST"])
 def notify():
-    if request.args.get("uuid") == FLASK_TOKEN:
-        if "text" in request.args.keys():
-            text = request.args.get("text")
+    args = request.get_json(force=True)
+    # ic(args)
+    if args is not None and "uuid" in args.keys() and args["uuid"] == FLASK_TOKEN:
+    # if request.args.get("uuid") == FLASK_TOKEN:
+        if "text" in args.keys():
+            text = args["text"]
             logging.info('Sending "%s"...' % text)
-            bot.send_message(text=request.args.get("text"), chat_id=CHAT_ID)
+            bot.send_message(text=text, chat_id=CHAT_ID)
         else:
             bot.send_message(text="お兄ちゃん、どうしたの？", chat_id=CHAT_ID)
         return Response(response="Data Sent!", status=200)
     else:
-        return Response(response="Wrong UUID!", status=400)
+        return Response(response="Wrong UUID!", status=404)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ def notify(content: str, url: str, uuid: int):
         "text": content,
         "uuid": uuid,
     }
-    r = requests.post(url, uuid)
+    r = requests.post(url, json=payload)
 
 
 if __name__ == "__main__":
@@ -21,4 +21,4 @@ if __name__ == "__main__":
     CHAT_ID = config["chat_id"]
     FLASK_TOKEN = config["flask_token"]
 
-    notify(content="TestTest~", url="http://localhost:5000", uuid=FLASK_TOKEN)
+    notify(content="TestTest~", url="http://localhost:5000/notify", uuid=FLASK_TOKEN)
