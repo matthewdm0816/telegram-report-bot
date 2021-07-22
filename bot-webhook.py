@@ -74,6 +74,10 @@ def notify():
     else:
         return Response(response="Wrong UUID!", status=404)
 
+# A welcome message to test our server
+@app.route('/')
+def index():
+    return "<h1>OvO</h1>"
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', threaded=True, port=5000)
