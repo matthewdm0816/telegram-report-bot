@@ -5,18 +5,21 @@ from icecream import ic
 def notify(content: str, url: str, uuid: int, non_block: bool=True):
     # Thread worker
     def f(content: str, url: str, uuid: int):
+        ic()
         payload = {
         "text": content,
         "uuid": uuid,
     }
         r = requests.post(url, json=payload)
-        ic(r.response)
+        ic(r.text)
 
-    thread = threading.Thread(target=notify, args=(content, url, uuid))
+    thread = threading.Thread(target=f, args=(content, url, uuid))
     thread.start()
     
     if not non_block:
         thread.join()
+
+    return thread
         
 
 if __name__ == "__main__":
